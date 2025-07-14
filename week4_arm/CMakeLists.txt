@@ -9,6 +9,9 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(ament_cmake_python REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
 
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME}/
@@ -17,6 +20,18 @@ install(DIRECTORY launch
 install(DIRECTORY urdf
   DESTINATION share/${PROJECT_NAME}/
 )
+
+#------------------------------------------------------------------
+# Install Python modules
+# ament_python_install_package(${PROJECT_NAME})
+
+# Install Python executables in the ros2_ws/install/cpp_py_pkg/lib/cpp_py_pkg/ folder
+install(PROGRAMS
+q1_subscriber.py
+q3_node.py
+DESTINATION lib/${PROJECT_NAME}
+)
+#------------------------------------------------------------------
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
