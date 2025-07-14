@@ -7,10 +7,10 @@ from geometry_msgs.msg import Point
 import math
 
 
-class MinimalSubscriber(Node):
+class PositionNode(Node):
 
     def __init__(self):
-        super().__init__('minimal_subscriber')
+        super().__init__('position_node')
         self.subscription = self.create_subscription(
             JointState,
             '/joint_states',
@@ -26,9 +26,12 @@ class MinimalSubscriber(Node):
     def listener_callback(self, msg):
         theta1 = msg.position[1] + 3.14/2
         theta2 = msg.position[2]
+
         L1 = 2
         L2 = 1.5
         end_effector = Point()
+        
+        '''Calculation of the position of the end effector.'''
         end_effector.x = L2*math.cos(theta1+theta2) + L1*math.cos(theta1)
         end_effector.y = L2*math.sin(theta1+theta2) + L1*math.sin(theta1)
         end_effector.z = 0.0
@@ -38,7 +41,7 @@ class MinimalSubscriber(Node):
 def main(args=None):
     rclpy.init(args=args)
 
-    minimal_subscriber = MinimalSubscriber()
+    minimal_subscriber = PositionNode()
 
     rclpy.spin(minimal_subscriber)
 

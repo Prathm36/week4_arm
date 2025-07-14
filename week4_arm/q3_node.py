@@ -25,7 +25,7 @@ class MoveArm(Node):
         current_x = msg.x
         current_y = msg.y
         self.get_logger().info(f"Cuurent position: {current_x}, {current_y}")
-
+        '''Rest of function is executed only after input is recieved.'''
         input_data = self.waitForInput()
         target = [current_x, current_y]
         if input_data[0] == 'x':
@@ -41,6 +41,8 @@ class MoveArm(Node):
         elif dist > max_reach:
             self.get_logger().info("Target too far.")
             return
+        
+        '''Calculation of the angles required for the End-effector at the target point.'''
         l1 = 2
         l2 = 1.5
         target_x = target[0]
@@ -51,7 +53,8 @@ class MoveArm(Node):
         angles.data = [theta1, theta2]
         self.publisher_.publish(angles)
         self.get_logger().info(f"Publishing: {angles.data[0]}, {angles.data[1]}")
-
+    
+    '''Function for the input and so that the program pauses until the input from user is recieved.'''
     def waitForInput(self):
         while True:
             direction = input("Enter direction x or y: ")
